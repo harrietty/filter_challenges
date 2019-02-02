@@ -8,15 +8,27 @@ Remember that `filter` takes a function, which is passed each item of the array 
 
 Use the test suite to help you understand what the functions need to do.
 
-When cloning this repository, first install the dependencies:
+### Instructions
+
+Fork and clone this repository.
+
+After cloning, `cd` into the repository.
+
+Once inside the directory `filter_challenges`, first install the dependencies:
 
     $ npm install
 
 Run the tests to see whether your code is working:
 
     $ npm test
+    
+The output will initially show you that the fist function is passing all its tests, but the other functions' tests are failing.
 
-To hone in on a specific test, or group of tests, use the `.only` notation in the test file:
+You can see what the tests are testing for in the `spec/index.spec.js` file.
+
+You will need to implement the code in each function that makes the tests pass. It is advisable to focus on one test at a time - tests for each function generally start with the basic functionality, and then add more specific tests for edge cases. After implementing some code, run the tests again to see whether you've made the test green.
+
+If you are getting annoyed by all the output every time you run the tests and want to hone in on a specific test, or group of tests, use the `.only` notation in the test file:
 
 ```javascript
  describe.only('findBobs', function () {
