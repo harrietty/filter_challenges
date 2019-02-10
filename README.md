@@ -46,3 +46,20 @@ Or:
 ```
 
 Remember to remove the `.only` from the test once you're done!
+
+## Pulling in additional challenges
+
+To pull in additional challenges, add my original repository as an additional remote repository with the following command:
+
+`$ git remote add upstream https://github.com/harrietty/filter_challenges.git`
+
+To pull in changes from the upstream repository, first ensure your local branch is "clean" (you have no uncommitted changes). If you run `git status` and you see files that are waiting to be committed, commit them before proceeding.
+
+Then run:
+
+`$ git pull upstream master`
+
+If this succeeds, you should see additional challenges in the `index.js` file.
+
+You can see the new commits you've pulled in by running `git log`
+
