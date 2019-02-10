@@ -114,7 +114,7 @@ describe('Filter challenges', function () {
     
     it('is case insensitive', function () {
       const names = ['Henry', 'heather', 'Paul', 'Patricia'];
-      expect(challenges.findNamesStartingWith(names, 'h')).to.eql(['Henry', 'Heather']);
+      expect(challenges.findNamesStartingWith(names, 'h')).to.eql(['Henry', 'heather']);
     });
 
     it('ignores anything that is not a string', function () {
