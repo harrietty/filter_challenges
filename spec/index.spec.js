@@ -154,4 +154,225 @@ describe('Filter challenges', function () {
       expect(challenges.findBobs(names)).to.eql([]);
     });
   });
+
+  describe('findOverage', function () {
+    it('filters an array of people to only include those 18 or over', function () {
+      const people = [
+        {name: 'Stevie', age: 22},
+        {name: 'Brenda', age: 56},
+        {name: 'Kerry', age: 17},
+        {name: 'Charlotte', age: 18},
+      ];
+
+      const expected = [
+        {name: 'Stevie', age: 22},
+        {name: 'Brenda', age: 56},
+        {name: 'Charlotte', age: 18},
+      ];
+
+      expect(challenges.findOverage(people)).to.eql(expected);
+    });
+
+    it('returns an empty array if no matching people are found', function () {
+      const people = [
+        {name: 'Stevie', age: 2},
+        {name: 'Brenda', age: 6},
+        {name: 'Kerry', age: 17},
+        {name: 'Charlotte', age: 8},
+      ];
+
+      expect(challenges.findOverage(people)).to.eql([]);
+    });
+  });
+
+  describe('findPythonDevs', function () {
+    it('filters an array of people to only return python developers', function () {
+      const devs = [
+        {name: 'Barry', language: 'Bash'},
+        {name: 'Penny', language: 'Python'},
+        {name: 'John', language: 'JavaScript'},
+        {name: 'Rebecca', language: 'Ruby'},
+        {name: 'Jane', language: 'Python'}
+      ];
+
+      const expected = [
+        {name: 'Penny', language: 'Python'},
+        {name: 'Jane', language: 'Python'}
+      ];
+
+      expect(challenges.findPythonDevs(devs)).to.eql(expected);
+    });
+
+    it('returns an empty array if no matching devs are found', function () {
+      const devs = [
+        {name: 'Barry', language: 'Bash'},
+        {name: 'Penny', language: 'Perl'},
+        {name: 'John', language: 'JavaScript'},
+        {name: 'Rebecca', language: 'Ruby'},
+        {name: 'Jane', language: 'Perl'}
+      ];
+
+      expect(challenges.findPythonDevs(devs)).to.eql([]);
+    });
+  });
+
+  describe('findCorrectDevs', function () {
+    it('returns a filtered array of devs based on the required languages', function () {
+      const devs = [
+        {name: 'Barry', language: 'Bash'},
+        {name: 'Penny', language: 'Perl'},
+        {name: 'John', language: 'JavaScript'},
+        {name: 'Rebecca', language: 'Ruby'},
+        {name: 'Jane', language: 'Perl'}
+      ];
+
+      const requiredLangs = ['Ruby', 'Perl'];
+
+      const expected = [
+        {name: 'Penny', language: 'Perl'},
+        {name: 'Rebecca', language: 'Ruby'},
+        {name: 'Jane', language: 'Perl'}
+      ];
+
+      expect(challenges.findCorrectDevs(devs, requiredLangs)).to.eql(expected);
+    });
+
+    it('returns correct devs if devs matching only 1 of the required languages is found', function () {
+      const devs = [
+        {name: 'Barry', language: 'Bash'},
+        {name: 'Penny', language: 'Perl'},
+        {name: 'John', language: 'JavaScript'},
+        {name: 'Rebecca', language: 'Ruby'},
+        {name: 'Jane', language: 'Perl'}
+      ];
+
+      const requiredLangs = ['Ruby', 'C#'];
+
+      const expected = [
+        {name: 'Rebecca', language: 'Ruby'}
+      ];
+
+      expect(challenges.findCorrectDevs(devs, requiredLangs)).to.eql(expected);
+    });
+
+    it('returns an empty array if no matching devs are found', function () {
+      const devs = [
+        {name: 'Barry', language: 'Bash'},
+        {name: 'Penny', language: 'Perl'},
+        {name: 'John', language: 'JavaScript'},
+        {name: 'Rebecca', language: 'Ruby'},
+        {name: 'Jane', language: 'Perl'}
+      ];
+
+      const requiredLangs = ['C#', 'GoLang'];
+
+      expect(challenges.findCorrectDevs(devs, requiredLangs)).to.eql([]);
+    });
+  });
+
+  describe('findCheapDevs', function () {
+    it('returns a filtered array of devs based on the maximum price', function () {
+      const devs = [
+        {name: 'Barry', language: 'Bash', pricePerHour: 30},
+        {name: 'Penny', language: 'Perl', pricePerHour: 15},
+        {name: 'John', language: 'JavaScript', pricePerHour: 40},
+        {name: 'Rebecca', language: 'Ruby', pricePerHour: 35},
+        {name: 'Jane', language: 'Perl', pricePerHour: 10},
+        {name: 'Fiona', language: 'HTML', pricePerHour: 20}
+      ];
+      
+      const maxPrice = 20;
+
+      const expected = [
+        {name: 'Penny', language: 'Perl', pricePerHour: 15},
+        {name: 'Jane', language: 'Perl', pricePerHour: 10},
+        {name: 'Fiona', language: 'HTML', pricePerHour: 20}
+      ];
+
+      expect(challenges.findCheapDevs(devs, maxPrice)).to.eql(expected);
+    });
+
+    it('returns an empty array if no cheap enough devs are found', function () {
+      const devs = [
+        {name: 'Barry', language: 'Bash', pricePerHour: 30},
+        {name: 'Penny', language: 'Perl', pricePerHour: 25},
+        {name: 'John', language: 'JavaScript', pricePerHour: 40},
+        {name: 'Rebecca', language: 'Ruby', pricePerHour: 35},
+        {name: 'Jane', language: 'Perl', pricePerHour: 30},
+        {name: 'Fiona', language: 'HTML', pricePerHour: 50}
+      ];
+
+      const maxPrice = 20;
+
+      expect(challenges.findCheapDevs(devs, maxPrice)).to.eql([]);
+    });
+  });
+
+  describe('findMultipleSkillDevs', function () {
+    it('returns an array of devs who match both required skills', function () {
+      const devs = [
+        {name: 'Paul', languages: ['Ruby', 'JavaScript', 'Bash']},
+        {name: 'Sally', languages: ['C#', 'JavaScript']},
+        {name: 'Naomi', languages: ['Ruby', 'Perl', 'Bash', 'JavaScript']},
+        {name: 'Roger', languages: ['CSS', 'HTML', 'JavaScript', 'Bash']},
+        {name: 'Paul', languages: ['Ruby']},
+      ];
+
+      expect(challenges.findMultipleSkillDevs(devs, 'Bash', 'Ruby')).to.eql([
+        {name: 'Paul', languages: ['Ruby', 'JavaScript', 'Bash']},
+        {name: 'Naomi', languages: ['Ruby', 'Perl', 'Bash', 'JavaScript']}
+      ]);
+    });
+
+    it('returns a empty array if no devs have both matching skills', function () {
+      const devs = [
+        {name: 'Paul', languages: ['Ruby', 'JavaScript', 'Bash']},
+        {name: 'Sally', languages: ['C#', 'JavaScript']},
+        {name: 'Naomi', languages: ['Ruby', 'Perl', 'Bash', 'JavaScript']},
+        {name: 'Roger', languages: ['CSS', 'HTML', 'JavaScript', 'Bash']},
+        {name: 'Paul', languages: ['Ruby']},
+      ];
+
+      expect(challenges.findMultipleSkillDevs(devs, 'HTML', 'Python')).to.eql([]);
+    });
+  });
+
+  describe('findMatchingHotels', function () {
+    it('finds hotels with all the criteria listed in the array of criteria', function () {
+      const hotels = [
+        {name: 'Grand Budapest', facilities: ['Parking', 'Room Service', 'Spa', 'Gym', '24-hour Check-in']},
+        {name: 'Great Lakes', facilities: ['Parking', '24-hour Check-in']},
+        {name: 'The Swan', facilities: ['Room Service', '24-hour Check-in']},
+        {name: 'The Mandarin', facilities: ['Parking', 'Room Service', 'Spa', 'Gym']},
+        {name: 'Seven Dials', facilities: ['24-hour Check-in']},
+        {name: 'The Continental', facilities: ['Parking', 'Room Service', '24-hour Check-in', 'Continental Breakfast']},
+        {name: 'The Juniper Inn', facilities: ['Spa', 'Gym']},
+      ];
+
+      const criteria = ['Parking', 'Gym'];
+
+      const expected = [
+        {name: 'Grand Budapest', facilities: ['Parking', 'Room Service', 'Spa', 'Gym', '24-hour Check-in']},
+        {name: 'The Mandarin', facilities: ['Parking', 'Room Service', 'Spa', 'Gym']},
+      ];
+
+      expect(challenges.findMatchingHotels(hotels, criteria)).to.eql(expected);
+    });
+
+    it('returns an empty array if no hotels match all criteria', function () {
+      const hotels = [
+        {name: 'Grand Budapest', facilities: ['Parking', 'Room Service', 'Spa', 'Gym', '24-hour Check-in']},
+        {name: 'Great Lakes', facilities: ['Parking', '24-hour Check-in']},
+        {name: 'The Swan', facilities: ['Room Service', '24-hour Check-in']},
+        {name: 'The Mandarin', facilities: ['Parking', 'Room Service', 'Spa', 'Gym']},
+        {name: 'Seven Dials', facilities: ['24-hour Check-in']},
+        {name: 'The Continental', facilities: ['Parking', 'Room Service', '24-hour Check-in', 'Continental Breakfast']},
+        {name: 'The Juniper Inn', facilities: ['Spa', 'Gym']},
+      ];
+
+      const criteria = ['Parking', 'Gym', 'Continental Breakfast'];
+
+      expect(challenges.findMatchingHotels(hotels, criteria)).to.eql([]);
+    });
+  });
 });
